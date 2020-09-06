@@ -43,12 +43,12 @@ bot.on("ready", (e) => {
 
   // Loop through the target subreddits and grab the most recent top post
   // Take the top post and post the image link to the target channel
-  const loopThroughTargets = () => {
+  const loopThroughTargets = async () => {
     console.log("FETCHING TARGETS");
     let messageSent = false;
 
     for (let i = 0; i < TARGETS.length; i++) {
-      const subreddit = TARGETS[i]
+      const subreddit = TARGETS[i];
       const {
         data: {
           data: { children: hotChildren },
@@ -71,7 +71,7 @@ bot.on("ready", (e) => {
 
   // Only run this if the bot is enabled
   if (botEnabled) {
-    loopThroughTargets();
+    await loopThroughTargets();
     setInterval(loopThroughTargets, timeToWaitInMs);
   }
 
