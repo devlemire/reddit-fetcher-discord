@@ -25,7 +25,7 @@ const {
 // Discord Bot
 const bot = new Discord.Client();
 
-bot.on("ready", (e) => {
+bot.on("ready", async (e) => {
   console.log("BOT READY");
   const botEnabled = BOT_ON === "true";
   // 30 minutes
