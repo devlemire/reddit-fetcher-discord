@@ -47,7 +47,8 @@ bot.on("ready", (e) => {
     console.log("FETCHING TARGETS");
     let messageSent = false;
 
-    TARGETS.forEach(async (subreddit) => {
+    for (let i = 0; i < TARGETS.length, i++) {
+      const subreddit = TARGETS[i]
       const {
         data: {
           data: { children: hotChildren },
@@ -63,7 +64,7 @@ bot.on("ready", (e) => {
         alreadySent[hotImageUrl] = true;
         messageSent = true;
       }
-    });
+    }
 
     if (!messageSent) channel.send(randomMessage());
   };
