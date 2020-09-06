@@ -45,7 +45,6 @@ bot.on("ready", async (e) => {
   // Take the top post and post the image link to the target channel
   const loopThroughTargets = async () => {
     console.log("FETCHING TARGETS");
-    let messageSent = false;
 
     for (let i = 0; i < TARGETS.length; i++) {
       const subreddit = TARGETS[i];
@@ -62,11 +61,10 @@ bot.on("ready", async (e) => {
       if (hotImageUrl && !alreadySent[hotImageUrl]) {
         channel.send(`https://reddit.com${permalink} ${hotImageUrl}`);
         alreadySent[hotImageUrl] = true;
-        messageSent = true;
       }
     }
 
-    if (!messageSent) channel.send(randomMessage());
+    channel.send(randomMessage());
   };
 
   // Only run this if the bot is enabled
