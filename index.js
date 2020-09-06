@@ -47,7 +47,7 @@ bot.on("ready", (e) => {
     console.log("FETCHING TARGETS");
     let messageSent = false;
 
-    for (let i = 0; i < TARGETS.length, i++) {
+    for (let i = 0; i < TARGETS.length; i++) {
       const subreddit = TARGETS[i]
       const {
         data: {
