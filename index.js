@@ -38,15 +38,15 @@ bot.on("ready", (e) => {
 
   // Message generator
   const randomMessage = () => {
-    return MESSAGES[Math.floor(Math.random() * Math.floor(MESSAGES.length))]
-  }
+    return MESSAGES[Math.floor(Math.random() * Math.floor(MESSAGES.length))];
+  };
 
   // Loop through the target subreddits and grab the most recent top post
   // Take the top post and post the image link to the target channel
   const loopThroughTargets = () => {
     console.log("FETCHING TARGETS");
     let messageSent = false;
-    
+
     TARGETS.forEach(async (subreddit) => {
       const {
         data: {
@@ -59,12 +59,13 @@ bot.on("ready", (e) => {
       const permalink = hotFirstChild.data.permalink;
 
       if (hotImageUrl && !alreadySent[hotImageUrl]) {
-        if (!messageSent) channel.send(randomMessage());
         channel.send(`https://reddit.com${permalink} ${hotImageUrl}`);
         alreadySent[hotImageUrl] = true;
         messageSent = true;
       }
     });
+
+    if (!messageSent) channel.send(randomMessage());
   };
 
   // Only run this if the bot is enabled
