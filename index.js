@@ -2,6 +2,7 @@ require("dotenv").config({ path: `${__dirname}/.env` });
 const Discord = require("discord.js");
 const axios = require("axios");
 const TARGETS = require("./targets.json");
+const MESSAGES = require("./messages.json");
 
 // Use an object for instant lookup
 const alreadySent = {};
@@ -35,10 +36,17 @@ bot.on("ready", (e) => {
     return channelObj.name === channelName;
   });
 
+  // Message generator
+  const randomMessage = () => {
+    return MESSAGES[Math.floor(Math.random() * Math.floor(MESSAGES.length))]
+  }
+
   // Loop through the target subreddits and grab the most recent top post
   // Take the top post and post the image link to the target channel
   const loopThroughTargets = () => {
     console.log("FETCHING TARGETS");
+    let messageSent = false;
+    
     TARGETS.forEach(async (subreddit) => {
       const {
         data: {
@@ -51,8 +59,10 @@ bot.on("ready", (e) => {
       const permalink = hotFirstChild.data.permalink;
 
       if (hotImageUrl && !alreadySent[hotImageUrl]) {
+        if (!messageSent) channel.send(randomMessage());
         channel.send(`https://reddit.com${permalink} ${hotImageUrl}`);
         alreadySent[hotImageUrl] = true;
+        messageSent = true;
       }
     });
   };
