@@ -55,9 +55,18 @@ bot.on("ready", async (e) => {
         },
       } = await axios.get(generateHotUrl(subreddit));
 
-      const hotFirstChild = hotChildren[0];
-      const hotImageUrl = hotFirstChild.data.url;
-      const permalink = hotFirstChild.data.permalink;
+      let hotFirstChild = hotChildren[0] && hotChildren[0].data;
+
+      if (hotFirstChild.stickied) {
+        if (hotChildren[1] && hotChildren[1].data) {
+          hotFirstChild = hotChildren[1].data
+        } else {
+          return
+        }
+      }
+
+      const hotImageUrl = hotFirstChild.url;
+      const permalink = hotFirstChild.permalink;
 
       if (hotImageUrl && !alreadySent[hotImageUrl]) {
         channel.send(`https://reddit.com${permalink} ${hotImageUrl}`);
