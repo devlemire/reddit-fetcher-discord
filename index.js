@@ -55,13 +55,13 @@ bot.on("ready", async (e) => {
         },
       } = await axios.get(generateHotUrl(subreddit));
 
-      let hotFirstChild = hotChildren[0] && hotChildren[0].data;
+      let hotFirstChild = (hotChildren[0] && hotChildren[0].data) ? hotChildren[0].data : {};
 
       if (hotFirstChild.stickied) {
         if (hotChildren[1] && hotChildren[1].data) {
           hotFirstChild = hotChildren[1].data
         } else {
-          return
+          continue
         }
       }
 
